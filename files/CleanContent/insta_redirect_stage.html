@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Instagram Redirect</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+body{font-family:Arial,Helvetica,sans-serif;margin:2rem;max-width:700px;color:#333}
+h1{color:#7c3aed;font-size:1.8rem} code{background:#f3f4f6;padding:2px 4px;border-radius:4px}
+.ok{color:#22c55e}.err{color:#ef4444} textarea{width:100%;min-height:160px}
+</style>
+</head>
+<body>
+<h1>Instagram Login – Redirect</h1>
+<p id="status">Processing redirect…</p>
+
+<div id="box" style="display:none">
+  <h2>Response</h2>
+  <textarea id="output" readonly></textarea>
+</div>
+
+<script>
+(async () => {
+  const qs = new URLSearchParams(location.search);
+  const status = document.getElementById('status');
+  const out    = document.getElementById('output');
+  const box    = document.getElementById('box');
+
+  if (qs.has('error')) {
+    status.innerHTML = `⛔ <span class="err">Error:</span> ${qs.get('error_description') || qs.get('error')}`;
+    return;
+  }
+
+  if (!qs.has('code')) {
+    status.textContent = 'Code parameter not found.';
+    return;
+  }
+
+  const code = qs.get('code');
+  status.textContent = 'Exchanging code for token…';
+
+  try {
+    const res = await fetch('https://moon-api-stage-5bc81acdbf00.herokuapp.com/instagram/exchange-code', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ code })
+    });
+    const json = await res.json();
+    status.innerHTML = res.ok
+      ? '✅ <span class="ok">Token received!</span>'
+      : '⛔ <span class="err">Exchange failed</span>';
+    out.value = JSON.stringify(json, null, 2);
+    box.style.display = 'block';
+  } catch(e) {
+    status.innerHTML = '⛔ <span class="err">Network error</span>';
+    console.error(e);
+  }
+})();
+</script>
+</body>
+</html>
