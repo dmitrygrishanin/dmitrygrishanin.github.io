@@ -46,16 +46,24 @@ h1{color:#7c3aed;font-size:1.8rem} code{background:#f3f4f6;padding:2px 4px;borde
       body: JSON.stringify({ code })
     });
     const json = await res.json();
-    status.innerHTML = res.ok
-      ? '✅ <span class="ok">Token received!</span>'
-      : '⛔ <span class="err">Exchange failed</span>';
-    out.value = JSON.stringify(json, null, 2);
-    box.style.display = 'block';
+    if (res.ok) {
+      status.innerHTML = '✅ <span class="ok">Логин выполнен успешно!<br>Это окно закроется через 3 секунды…</span>';
+      out.value = JSON.stringify(json, null, 2);
+      box.style.display = 'block';
+      setTimeout(() => {
+        window.close();
+      }, 3000);
+    } else {
+      status.innerHTML = '⛔ <span class="err">Exchange failed</span>';
+      out.value = JSON.stringify(json, null, 2);
+      box.style.display = 'block';
+    }
   } catch(e) {
     status.innerHTML = '⛔ <span class="err">Network error</span>';
     console.error(e);
   }
 })();
 </script>
+
 </body>
 </html>
