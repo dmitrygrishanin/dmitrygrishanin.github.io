@@ -1,75 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Instagram Redirect</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<style>
-body{font-family:Arial,Helvetica,sans-serif;margin:2rem;max-width:700px;color:#333}
-h1{color:#7c3aed;font-size:1.8rem} code{background:#f3f4f6;padding:2px 4px;border-radius:4px}
-.ok{color:#22c55e}.err{color:#ef4444} textarea{width:100%;min-height:160px}
-</style>
+  <meta charset="UTF-8">
+  <title>Redirecting…</title>
+  <script>
+    // Извлечь code и сделать window.location = cleancontent://oauth-callback?code=...
+    const params = new URLSearchParams(location.search);
+    if (params.has('code')) {
+      window.location = 'cleancontent://oauth-callback?code=' + encodeURIComponent(params.get('code'));
+    } else {
+      document.write('Ошибка: code не найден.');
+    }
+  </script>
 </head>
 <body>
-<h1>Instagram Login – Redirect</h1>
-<p id="status">Processing redirect…</p>
-
-<div id="box" style="display:none">
-  <h2>Response</h2>
-  <textarea id="output" readonly></textarea>
-</div>
-
-<script>
-(async () => {
-  const qs = new URLSearchParams(location.search);
-  const status = document.getElementById('status');
-  const out    = document.getElementById('output');
-  const box    = document.getElementById('box');
-
-  if (qs.has('error')) {
-    status.innerHTML = `⛔ <span class="err">Error:</span> ${qs.get('error_description') || qs.get('error')}`;
-    return;
-  }
-
-  if (!qs.has('code')) {
-    status.textContent = 'Code parameter not found.';
-    return;
-  }
-
-  const code = qs.get('code');
-  status.textContent = 'Exchanging code for token…';
-
-  try {
-    const res = await fetch('https://moon-api-stage-5bc81acdbf00.herokuapp.com/instagram/exchange-code', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ code })
-    });
-    const json = await res.json();
-    if (res.ok && json.user_id) {
-      status.innerHTML = '✅ <span class="ok">Логин выполнен успешно!<br>Переход в приложение…</span>';
-      out.value = JSON.stringify(json, null, 2);
-      box.style.display = 'block';
-
-      // Открываем приложение по кастомной схеме с user_id и username
-      setTimeout(() => {
-        window.location.href = 'cleancontent://oauth-callback?user_id='
-          + encodeURIComponent(json.user_id)
-          + '&username='
-          + encodeURIComponent(json.username || '');
-      }, 1200);
-
-    } else {
-      status.innerHTML = '⛔ <span class="err">Exchange failed</span>';
-      out.value = JSON.stringify(json, null, 2);
-      box.style.display = 'block';
-    }
-  } catch(e) {
-    status.innerHTML = '⛔ <span class="err">Network error</span>';
-    console.error(e);
-  }
-})();
-</script>
-
+  <p>Redirecting…</p>
 </body>
 </html>
