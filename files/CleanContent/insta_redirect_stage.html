@@ -46,13 +46,17 @@ h1{color:#7c3aed;font-size:1.8rem} code{background:#f3f4f6;padding:2px 4px;borde
       body: JSON.stringify({ code })
     });
     const json = await res.json();
-    if (res.ok) {
-      status.innerHTML = '✅ <span class="ok">Логин выполнен успешно!<br>Это окно закроется через 3 секунды…</span>';
+    if (res.ok && json.user_id) {
+      status.innerHTML = '✅ <span class="ok">Логин выполнен успешно!<br>Переход в приложение…</span>';
       out.value = JSON.stringify(json, null, 2);
       box.style.display = 'block';
+
+      // Пытаемся открыть приложение через кастомную схему
       setTimeout(() => {
-        window.close();
-      }, 3000);
+        window.location = 'cleancontent://oauth-callback?user_id=' + encodeURIComponent(json.user_id) + '&username=' + encodeURIComponent(json.username || '');
+        // Можно также добавить window.close() если это popup
+      }, 1200);
+
     } else {
       status.innerHTML = '⛔ <span class="err">Exchange failed</span>';
       out.value = JSON.stringify(json, null, 2);
