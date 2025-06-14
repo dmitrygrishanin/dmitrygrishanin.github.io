@@ -9,7 +9,7 @@
     if (params.has('code')) {
       window.location = 'cleancontent://oauth-callback?code=' + encodeURIComponent(params.get('code'));
     } else {
-      document.write('Ошибка: code не найден.');
+      document.write('Error: code is not found.');
     }
   </script>
 </head>
