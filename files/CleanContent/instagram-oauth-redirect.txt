@@ -4,20 +4,12 @@
   <meta charset="UTF-8">
   <title>Redirecting…</title>
   <script>
-    // Получаем параметры строки запроса
+    // Извлечь code и сделать window.location = cleancontent://oauth-callback?code=...
     const params = new URLSearchParams(location.search);
     if (params.has('code')) {
-      // Редирект на кастомную схему с code
-      window.location.href = 'cleancontent://oauth-callback?code=' + encodeURIComponent(params.get('code'));
-    } else if (params.has('error')) {
-      // Редирект на кастомную схему с ошибкой (например, отказ пользователя)
-      let error = params.get('error');
-      let desc = params.get('error_description') || '';
-      window.location.href = 'cleancontent://oauth-callback?error=' + encodeURIComponent(error) +
-                             '&error_description=' + encodeURIComponent(desc);
+      window.location = 'cleancontent://oauth-callback?code=' + encodeURIComponent(params.get('code'));
     } else {
-      // Просто текст, если ничего нет
-      document.write('Error: code is not found in URL parameters.');
+      document.write('Error: code is not found.');
     }
   </script>
 </head>
