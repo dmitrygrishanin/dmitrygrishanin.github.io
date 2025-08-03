@@ -4,10 +4,25 @@
   <meta charset="UTF-8">
   <title>Redirecting…</title>
   <script>
-    // Извлечь code и сделать window.location = cleancontent://oauth-callback?code=...
+    // Извлекаем параметры из URL
     const params = new URLSearchParams(location.search);
-    if (params.has('code')) {
-      window.location = 'cleancontent://oauth-callback?code=' + encodeURIComponent(params.get('code'));
+    const code = params.get('code');
+    const state = params.get('state'); // state поможет определить сервис
+
+    if (code) {
+      // Определяем, какой сервис — Instagram или Facebook
+      let scheme;
+      if (state && state.toLowerCase().includes('facebook')) {
+        scheme = 'cleancontent://facebook-oauth-callback?code=';
+      } else if (state && state.toLowerCase().includes('instagram')) {
+        scheme = 'cleancontent://instagram-oauth-callback?code=';
+      } else {
+        // fallback — Instagram по умолчанию
+        scheme = 'cleancontent://instagram-oauth-callback?code=';
+      }
+
+      // Перенаправляем обратно в приложение
+      window.location = scheme + encodeURIComponent(code);
     } else {
       document.write('Error: code is not found.');
     }
