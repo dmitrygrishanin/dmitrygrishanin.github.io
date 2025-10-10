@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Clean Content Support</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      color: #444;
+    }
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    ul {
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🛡️ Support for <em>Clean Content</em> App</h1>
+
+    <p>Welcome to the official support page!</p>
+
+    <h2>❓ Frequently Asked Questions</h2>
+
+    <p><strong>I can’t log in with Instagram or Facebook.</strong></p>
+    <ul>
+      <li>Check your internet connection.</li>
+      <li>Update the app to the latest version.</li>
+      <li>Restart your device and try again.</li>
+    </ul>
+
+    <p><strong>How can I delete my data or account?</strong><br>
+    Send an email with the subject <em>“Data Deletion”</em> to our support address below.  
+    Your data will be permanently deleted within 30 days.</p>
+
+    <p><strong>When will I get a response?</strong><br>
+    Usually within 24 hours on business days (Mon–Fri, Europe/Sofia time).</p>
+
+    <h2>✉️ Contact the Developer</h2>
+    <p>If you have questions, suggestions, or need help — please contact us:<br>
+    📧 <a href="mailto:info@dmitrygrishanin.com">info@dmitrygrishanin.com</a></p>
+
+    <h2>🔒 Privacy Policy</h2>
+    <p>You can read our privacy policy here:<br>
+    🔗 <a href="https://dmitrygrishanin.com/privacy.html" target="_blank">Privacy Policy</a></p>
+
+    <h2>📌 Supported Platforms</h2>
+    <ul>
+      <li>iOS 15 and above</li>
+      <li>Android 9 and above</li>
+    </ul>
+
+    <p><em>Last updated: October 9, 2025</em></p>
+  </div>
+</body>
+</html>
